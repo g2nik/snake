@@ -126,7 +126,7 @@ class _UnlockablesState extends State<Unlockables> {
                                       unlockable: "rengoku",
                                       head: true,
                                       unlockingScore: 10,
-                                      child: Image.asset("images/rengoku.png"),
+                                      child: Image.asset("images/rengokuAvatar.png"),
                                       onPressed: reload
                                     ),
                                   ]

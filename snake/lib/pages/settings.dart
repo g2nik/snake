@@ -84,13 +84,13 @@ class _SettingsState extends State<Settings> {
                             icon: Icon(Icons.swipe, color: Colors.amber, size: 100),
                             onPressed: () async {
                               print("XD");
-                              await Preferences.setControls(true);
+                              await Preferences.setSwipe(true);
                             },
                           ),
                           IconButton(
                             icon: Icon(Icons.sync, color: Colors.amber, size: 100),
                             onPressed: () async {
-                              await Preferences.setControls(false);
+                              await Preferences.setSwipe(false);
                             },
                           ),
                         ],
