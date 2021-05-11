@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 enum Tile {
   Empty,
   Apple,
   GoldenApple,
+  RainbowApple,
   Head,
   Body,
   Tail
@@ -159,6 +163,83 @@ class GoldenAppleTile extends StatelessWidget {
         border: Border.all(color: color),
         image: DecorationImage(image: AssetImage("images/golden_apple.png"))
       ),
+    );
+  }
+}
+
+class RainbowAppleTile extends StatelessWidget {
+  RainbowAppleTile({Color borderColor})
+  : color = borderColor;
+  Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: color),),
+      child: RainbowApple(),
+    );
+  }
+}
+
+class RainbowApple extends StatefulWidget {
+  @override
+  _RainbowAppleState createState() => _RainbowAppleState();
+}
+
+class _RainbowAppleState extends State<RainbowApple> {
+
+  Timer _timer;
+  int time;
+  int colorIndex = 0;
+
+  List<Color> colors = [
+    Colors.red,
+    Colors.deepOrange,
+    Colors.orange,
+    Colors.amber,
+    Colors.yellow,
+    Colors.limeAccent,
+    Colors.lightGreen,
+    Colors.green,
+    Colors.greenAccent,
+    Colors.tealAccent,
+    Colors.teal,
+    Colors.blue,
+    Colors.blue[700],
+    Colors.indigo,
+    Colors.deepPurple,
+    Colors.purple,
+    Colors.purpleAccent,
+    Colors.pinkAccent,
+    Colors.pink,
+    
+  ];
+
+  void startTimer(int milliseconds) {
+    Duration moment =  Duration(milliseconds: milliseconds);
+    _timer = Timer.periodic(moment, (Timer timer) {
+        if (time == 999999999) timer.cancel();
+        else {
+          setState(() {
+            if (colorIndex < colors.length - 1) colorIndex++;
+            else colorIndex = 0;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer(50);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ColorFiltered(
+      colorFilter: ColorFilter.mode(colors[colorIndex], BlendMode.modulate),
+      child: Image.asset("images/rainbow_apple.png", scale: 5,)
     );
   }
 }

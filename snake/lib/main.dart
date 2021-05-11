@@ -25,8 +25,8 @@ class SnakeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.cyan,
-        accentColor: Colors.cyanAccent
+        primaryColor: Colors.green[200],
+        accentColor: Colors.greenAccent
       ),
       title: "SnakeGame",
       home: firstTime ? Tutorial() : Home(),
