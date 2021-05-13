@@ -4,7 +4,7 @@ import 'package:snake/models/preferences.dart';
 import 'package:snake/widgets.dart';
 import 'package:snake/pages/settings.dart';
 import 'package:snake/pages/snake_page.dart';
-import 'package:snake/pages/unlockables.dart';
+import 'package:snake/pages/unblockables/unlockables.dart';
 
 class Home extends StatefulWidget {
   @override

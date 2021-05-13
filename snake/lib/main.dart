@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snake/models/preferences.dart';
 import 'package:snake/pages/home.dart';
-import 'package:snake/pages/tutorial.dart';
+import 'package:snake/pages/tutorial/tutorial.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

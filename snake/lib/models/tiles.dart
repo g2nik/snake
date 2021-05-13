@@ -14,108 +14,57 @@ enum Tile {
 }
 
 class SnakeStyle {
+
   static LinearGradient getHeadGradient(String unlockable) {
-    if (unlockable == "none") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.greenAccent[100], Colors.tealAccent],
-      );
-    }
-    else if (unlockable == "red") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.redAccent, Colors.red[900]],
-      );
-    }
-    else if (unlockable == "blue") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.blueAccent, Colors.blue[900]],
-      );
-    }
-    else if (unlockable == "ghost") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.transparent],
-      );
-    }
+    List<Color> colors = [];
+
+    if (unlockable == "none") colors = [Colors.greenAccent[100], Colors.tealAccent];
+    else if (unlockable == "red") colors = [Colors.redAccent, Colors.red[900]];
+    else if (unlockable == "blue") colors = [Colors.blueAccent, Colors.blue[900]];
+    else if (unlockable == "yellow") colors = [Colors.yellow, Colors.amber];
+    else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
+
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      stops: [0.0, 1.0],
+      colors: colors,
+    );
   }
 
   static LinearGradient getBodyGradient(String unlockable) {
-    if (unlockable == "none") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.greenAccent, Colors.tealAccent],
-      );
-    }
-    else if (unlockable == "red") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.redAccent, Colors.red[900]],
-      );
-    }
-    else if (unlockable == "blue") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.blueAccent, Colors.blue[900]],
-      );
-    }
-    else if (unlockable == "ghost") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.transparent],
-      );
-    }
+    List<Color> colors = [];
+    
+    if (unlockable == "none") colors = [Colors.greenAccent, Colors.tealAccent];
+    else if (unlockable == "red") colors = [Colors.redAccent, Colors.red[900]];
+    else if (unlockable == "blue") colors = [Colors.blueAccent, Colors.blue[900]];
+    else if (unlockable == "yellow") colors = [Colors.amber, Colors.amberAccent];
+    else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
+
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      stops: [0.0, 1.0],
+      colors: colors,
+    );
   }
 
   static LinearGradient getTailGradient(String unlockable) {
-    if (unlockable == "none") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.greenAccent, Colors.greenAccent[100]],
-      );
-    }
-    else if (unlockable == "red") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.redAccent, Colors.orange],
-      );
-    }
-    else if (unlockable == "blue") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
-        colors: [Colors.lightBlueAccent[100], Colors.lightBlueAccent],
-      );
-    }
-    else if (unlockable == "ghost") {
-      return LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.transparent],
-      );
-    }
-  }
+    List<Color> colors = [];
+    
+    if (unlockable == "none") colors = [Colors.greenAccent, Colors.greenAccent[100]];
+    else if (unlockable == "red") colors = [Colors.redAccent, Colors.orange];
+    else if (unlockable == "blue") colors = [Colors.lightBlueAccent[100], Colors.lightBlueAccent];
+    else if (unlockable == "yellow") colors = [Colors.yellowAccent, Colors.white];
+    else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
 
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      stops: [0.0, 1.0],
+      colors: colors,
+    );
+  }
 }
 
 class EmptyTile extends StatelessWidget {
@@ -182,12 +131,16 @@ class RainbowAppleTile extends StatelessWidget {
 }
 
 class RainbowApple extends StatefulWidget {
+  RainbowApple([double scale]) {
+    this.scale = scale == null ? 7.5 : scale;
+  }
+
+  double scale = 7.5;
   @override
   _RainbowAppleState createState() => _RainbowAppleState();
 }
 
 class _RainbowAppleState extends State<RainbowApple> {
-
   Timer _timer;
   int time;
   int colorIndex = 0;
@@ -203,16 +156,13 @@ class _RainbowAppleState extends State<RainbowApple> {
     Colors.green,
     Colors.greenAccent,
     Colors.tealAccent,
-    Colors.teal,
     Colors.blue,
-    Colors.blue[700],
     Colors.indigo,
     Colors.deepPurple,
     Colors.purple,
     Colors.purpleAccent,
     Colors.pinkAccent,
     Colors.pink,
-    
   ];
 
   void startTimer(int milliseconds) {
@@ -232,14 +182,20 @@ class _RainbowAppleState extends State<RainbowApple> {
   @override
   void initState() {
     super.initState();
-    startTimer(50);
+    startTimer(75);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ColorFiltered(
       colorFilter: ColorFilter.mode(colors[colorIndex], BlendMode.modulate),
-      child: Image.asset("images/rainbow_apple.png", scale: 5,)
+      child: Image.asset("images/rainbow_apple.png", scale: widget.scale)
     );
   }
 }
@@ -251,17 +207,8 @@ class HeadTile extends StatelessWidget {
   String bodyUnlockable;
   String headUnlockable;
 
-  String path;
-
   @override
   Widget build(BuildContext context) {
-
-    if (headUnlockable == "solidSnake") {
-      path = "images/solid_snake.png";
-    } else if (headUnlockable == "rengoku") {
-      path = "images/rengoku.png";
-    }
-
     return Stack(
       children: [
         Container(
@@ -274,7 +221,7 @@ class HeadTile extends StatelessWidget {
         headUnlockable != "none" ? Container(
           decoration: BoxDecoration(
             border: Border.all(color: color),
-            image: DecorationImage(image: AssetImage(path))
+            image: DecorationImage(image: AssetImage("images/$headUnlockable.png"))
           ),
         ) : Container()
       ],

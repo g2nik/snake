@@ -56,7 +56,7 @@ class SnakeGame {
     this.headUnlockable = headUnlockable;
     this.rows = rows;
     this.columns = (rows / 2).round() + 1;
-    //this.columns = columns;
+    this.columns = columns;
     initialColumn = (columns / 2).round();
     initialRow = (rows / 2).round();
     startCoordinates();

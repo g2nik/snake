@@ -148,9 +148,12 @@ class UnlockableButton extends StatelessWidget {
 
           return Column(
             children: [
-              SnakeText(
-                text: highestScore >= unlockingScore ? title : "GET $unlockingScore POINTS",
-                color: Colors.amber, size: 50, offset: true
+              ConstrainedBox(
+                constraints: BoxConstraints(minHeight: 75, maxHeight: 100),
+                child: SnakeText(
+                  text: highestScore >= unlockingScore ? title : "Get $unlockingScore\npoints",
+                  color: Colors.amber, size: 30, offset: true
+                ),
               ),
               SizedBox(height: 10),
               TextButton(
@@ -164,12 +167,12 @@ class UnlockableButton extends StatelessWidget {
                 },
                 child: CircleAvatar(
                   backgroundColor: currentUnlockable == unlockable ? Colors.amber : Colors.grey[800],
-                  radius: 80,
+                  radius: 60,
                   child: CircleAvatar(
-                    radius: 75,
+                    radius: 55,
                     backgroundColor: Colors.grey[800],
                     child: highestScore < unlockingScore
-                    ? Icon(Icons.lock, size: 100)
+                    ? Icon(Icons.lock, size: 75)
                     : child,
                   ),
                 ),
