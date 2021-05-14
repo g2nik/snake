@@ -62,24 +62,15 @@ class _TutorialState extends State<Tutorial> with SingleTickerProviderStateMixin
             physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-
-
-
               TutorialControls(
                 swipe: swipe,
                 function1: () => setState(() {swipe = !swipe;} ),
                 function2: () => setState(() => _tabController.animateTo(1))
               ),
-
-
-
               TutorialInfo(
                 function1: () => setState(() => _tabController.animateTo(0)),
                 function2: () => setState(() => _tabController.animateTo(2)),
               ),
-
-
-
               TutorialCustomization(
                 function1: () => setState(() => _tabController.animateTo(1)),
                 function2: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home())),

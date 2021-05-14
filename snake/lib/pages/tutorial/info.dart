@@ -13,19 +13,19 @@ class TutorialInfo extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: 50),
-        SnakeText(text: "Red apples give you\n1 point", color: Colors.green[300], size: 25, offset: true),
+        SizedBox(height: 25),
+        SnakeText(text: "1 point", color: Colors.green[300], size: 30, offset: true),
         SizedBox(height: 25),
         Image.asset("images/apple.png", scale: 7.5),
         SizedBox(height: 50),
-        SnakeText(text: "Golden apples give you\n5 points", color: Colors.green[300], size: 25, offset: true),
+        SnakeText(text: "5 points", color: Colors.green[300], size: 30, offset: true),
         SizedBox(height: 25),
         Image.asset("images/golden_apple.png", scale: 7.5),
         SizedBox(height: 50),
-        SnakeText(text: "Rainbow apples\ngenerate more apples\nfor 5 seconds", color: Colors.green[300], size: 25, offset: true),
+        SnakeText(text: "25 points\nGenerates more\napples for the next\n5 movements", color: Colors.green[300], size: 30, offset: true),
         SizedBox(height: 25),
         RainbowApple(),
-        SizedBox(height: 30),
+        SizedBox(height: 45),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

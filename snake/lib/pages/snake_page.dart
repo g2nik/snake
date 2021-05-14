@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:snake/models/preferences.dart';
 import 'package:snake/models/snake_game.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,9 @@ class _SnakePageState extends State<SnakePage> {
   String bodyUnlockable;
   String headUnlockable;
 
+  double sensitivity;
+
   StreamSubscription gyroscopeSubscription;
-  List<double> previousGyroscopeValues;
 
   Future<bool> startGame() async {
     if (loaded) {
@@ -81,8 +83,9 @@ class _SnakePageState extends State<SnakePage> {
               canChangeDirection = true;
             } else {
               //Game over
-              _snake.timer1.cancel();
-              _timer.cancel();
+              if (_snake.timer1 != null) _snake.timer1.cancel();
+              if (_snake.timer2 != null) _snake.timer2.cancel();
+              if (_timer != null) _timer.cancel();
               if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
               gameOver(_snake.score > highestScore);
             }
@@ -262,41 +265,54 @@ class _SnakePageState extends State<SnakePage> {
     );
   }
 
-  void controlCallback(Direction direction, bool canChangeDirection) {
+  void controlCallback(Direction direction) {
     _direction = direction;
-    this.canChangeDirection = canChangeDirection;
+    this.canChangeDirection = false;
   }
 
   void startGyroscopeControl() {
-    bool firstTime = true;
-    previousGyroscopeValues = [];
+    double verticalSensitivity = .5;
+    double horizontalSensitivity = 1.5;
+
     gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
-      setState(() {
-        List<double> gyroscopeValues = [event.x, event.y, event.z];
-        //Not first time
-        if (!firstTime) {
-          double delta = gyroscopeValues[2] - previousGyroscopeValues[2];
-          double delta2 = previousGyroscopeValues[2] - gyroscopeValues[2];
-          // print("d1 $delta");
-          // print("d2 $delta2");
-          
-          if (gyroscopeValues[0] > 1 && _direction != Direction.Down && _direction != Direction.Up) _direction = Direction.Down;
-          else if (gyroscopeValues[0] < -1 && _direction != Direction.Up && _direction != Direction.Down) _direction = Direction.Up;
+      List<double> gyroscopeValues = [event.x, event.y, event.z];
 
-          if (gyroscopeValues[1] > 1 && _direction != Direction.Right && _direction != Direction.Left) _direction = Direction.Right;
-          else if (gyroscopeValues[1] < -1 && _direction != Direction.Left && _direction != Direction.Right) _direction = Direction.Left;
-
-          // else if (gyroscopeValues[2] < 0 && previousGyroscopeValues[2] > .5) direction = Direction.Left;
-          // else if (gyroscopeValues[2] > 0 && previousGyroscopeValues[2] < -.5) direction = Direction.Right;
-
-          // if (gyroscopeValues[2] > 1 && previousGyroscopeValues[2] > .5) text = "left";
-          // if (gyroscopeValues[2] < -1 && previousGyroscopeValues[2] > -.5 ) text = "right";
-          // if (delta > 3 && gyroscopeValues[2] > 1) text = "Left";
-          // else if (delta2 > 3 && gyroscopeValues[2] < -1) text = "Right";
-        }
-        previousGyroscopeValues = gyroscopeValues;
-        firstTime = false;
-      });
+      //Move Up
+      if (gyroscopeValues[0] > verticalSensitivity
+      && canChangeDirection
+      && _direction != Direction.Down
+      && _direction != Direction.Up)
+      {
+        canChangeDirection = false;
+        _direction = Direction.Down;
+      } 
+      //Move Down
+      else if (gyroscopeValues[0] < -verticalSensitivity
+      && canChangeDirection
+      && _direction != Direction.Up
+      && _direction != Direction.Down)
+      {
+        canChangeDirection = false;
+        _direction = Direction.Up;
+      }
+      //Move Rigth
+      if (gyroscopeValues[1] > horizontalSensitivity
+      && canChangeDirection
+      && _direction != Direction.Right
+      && _direction != Direction.Left)
+      {
+        canChangeDirection = false;
+        _direction = Direction.Right;
+      }
+      //Move Left
+      else if (gyroscopeValues[1] < -horizontalSensitivity
+      && canChangeDirection
+      && _direction != Direction.Left
+      && _direction != Direction.Right)
+      {
+        canChangeDirection = false;
+        _direction = Direction.Left;
+      }
     });
   }
 
@@ -307,12 +323,12 @@ class _SnakePageState extends State<SnakePage> {
   }
 
   @override
-  void dispose() {
-    if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
-    _snake.timer1.cancel();
-    _snake.timer2.cancel();
-    _timer.cancel();
-    gyroscopeSubscription.cancel();
+  void dispose() async {
+    if (_snake.score > highestScore) await Preferences.setHighScore(_snake.score);
+    if (_snake.timer1 != null) _snake.timer1.cancel();
+    if (_snake.timer2 != null) _snake.timer2.cancel();
+    if (_timer != null) _timer.cancel();
+    if (gyroscopeSubscription != null) gyroscopeSubscription.cancel();
     super.dispose();
   }
 

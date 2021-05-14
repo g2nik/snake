@@ -36,29 +36,28 @@ class TutorialCustomization extends StatelessWidget {
           ],
         ),
         SizedBox(height: 50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CircleAvatar(backgroundColor: Colors.pink),
-            CircleAvatar(backgroundColor: Colors.limeAccent),
-            CircleAvatar(backgroundColor: Colors.green[800]),
-            CircleAvatar(backgroundColor: Colors.cyan),
-            CircleAvatar(backgroundColor: Colors.deepPurpleAccent),
-          ],
-        ),
-        SizedBox(height: 50),
         SnakeText(text: "Equip epic\ncharacters heads", color: Colors.green[300], size: 25, offset: true),
         SizedBox(height: 25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset("images/solid_snake.png", scale: 3),
-            Image.asset("images/bart.png", scale: 10),
             Image.asset("images/napoleon_avatar.png", scale: 7),
+            Image.asset("images/bart.png", scale: 10),
             Image.asset("images/michael_jackson_avatar.png", scale: 5),
           ],
         ),
-        SizedBox(height: 60),
+        SizedBox(height: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset("images/tesla_avatar.png", scale: 7),
+            Image.asset("images/vader.png", scale: 30),
+            Image.asset("images/messi_avatar.png", scale: 4),
+            Image.asset("images/master_chief.png", scale: 3.5),
+          ],
+        ),
+        SizedBox(height: 110),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -68,7 +67,7 @@ class TutorialCustomization extends StatelessWidget {
             ),
             TextButton(
               onPressed: f2,
-              child: SnakeText(text: ">", color: Colors.green[300], size: 150, offset: true),
+              child: SnakeText(text: "Start", color: Colors.green[300], size: 75, offset: true),
             ),
           ],
         ),

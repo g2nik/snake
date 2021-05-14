@@ -16,6 +16,7 @@ class _SettingsState extends State<Settings> {
   int columns = 0;
   int speed = 0;
   int sliderSpeed = 1;
+  bool swipe;
 
   List<int> speeds = [1000, 900, 800, 700, 600, 500, 400, 300, 200, 100];
   List<int> inverted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -32,6 +33,7 @@ class _SettingsState extends State<Settings> {
           rows = snapshot.data[0];
           columns = snapshot.data[1];
           speed = snapshot.data[2];
+          swipe = snapshot.data[6];
           speed = speed ~/ 100;
 
           if (speed == 10) sliderSpeed = 1;
@@ -75,22 +77,23 @@ class _SettingsState extends State<Settings> {
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(height: 50),
-                      SnakeText(text: "GAMEPLAY", color: Colors.amber, size: 35, offset: true),
-                      SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.swipe, color: Colors.amber, size: 100),
+                            iconSize: 100,
+                            icon: Icon(Icons.swipe, color: swipe ? Colors.green[300] : Colors.grey),
                             onPressed: () async {
-                              print("XD");
                               await Preferences.setSwipe(true);
+                              setState(() {});
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.sync, color: Colors.amber, size: 100),
+                            iconSize: 100,
+                            icon: Icon(Icons.sync, color: !swipe ? Colors.green[300] : Colors.grey),
                             onPressed: () async {
                               await Preferences.setSwipe(false);
+                              setState(() {});
                             },
                           ),
                         ],
@@ -144,33 +147,7 @@ class _SettingsState extends State<Settings> {
                           });
                         }
                       ),
-                      SizedBox(height: 50),
-                      SnakeText(text: "STYLE", color: Colors.amber, size: 55, offset: true),
-                      SnakeText(text: "-", color: Colors.amber, size: 35, offset: true),
-                      SizedBox(height: 20),
-                      TextButton(
-                        child: SnakeText(text: "CELTIC", font: "Celtic", color: Colors.amber, size: 40, offset: true),
-                        onPressed: () async {
-                          await Preferences.setFont("Celtic");
-                          setState(() {});
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      TextButton(
-                        child: SnakeText(text: "GRIND", font: "Grind", color: Colors.amber, size: 40, offset: true),
-                        onPressed: () async {
-                          await Preferences.setFont("Grind");
-                          setState(() {});
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      TextButton(
-                        child: SnakeText(text: "OMEGLE", font: "Omegle", color: Colors.amber, size: 40, offset: true),
-                        onPressed: () async {
-                          await Preferences.setFont("Omegle");
-                          setState(() {});
-                        },
-                      ),
+                      SizedBox(height: 50),                      
                     ],
                   ),
                 ),

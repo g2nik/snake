@@ -67,16 +67,6 @@ class Preferences {
     return await _prefs.setBool("swipe", value);
   }
 
-  static Future<String> getFont() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return _prefs.getString("font");
-  }
-
-  static Future setFont(String value) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return await _prefs.setString("font", value);
-  }
-
   static Future<String> getCurrentBodyUnlockable() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     return _prefs.getString("currentBody");
@@ -105,6 +95,7 @@ class Preferences {
     preferences.add(await getHighScore());
     preferences.add(await getCurrentBodyUnlockable());
     preferences.add(await getCurrentHeadUnlockable());
+    preferences.add(await getSwipe());
     return preferences;
   }
 
@@ -124,7 +115,6 @@ class Preferences {
     await setSpeed(500);
     await setHighScore(0);
     await setSwipe(true);
-    await setFont("Omegle");
     await setCurrentBodyUnlockable("none");
     await setCurrentHeadUnlockable("none");
     return true;

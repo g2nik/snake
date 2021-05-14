@@ -28,8 +28,9 @@ class SnakeGame {
 
   double opacity = 0;
   bool alternateColor = true;
-
-  int goldenAppleProbability = 1;
+  int goldenAppleProbability = 10;
+  int rainbowAppleProbability = 1;
+  int rainbowAppleCooldown = 0;
 
   List<List<Tile>> tiles;
   List<SnakeCoordinates> snakeCoordinates;
@@ -78,11 +79,14 @@ class SnakeGame {
     for (int i = 0; i < tiles.length; i++) {
       for (int j = 0; j < tiles[0].length; j++) tiles[i][j] = Tile.Empty;
     }
+
     tiles[initialRow][initialColumn] = Tile.Head;
     tiles[initialRow + 1][initialColumn] = Tile.Body;
     tiles[initialRow + 2][initialColumn] = Tile.Body;
     tiles[initialRow + 3][initialColumn] = Tile.Tail;
     tiles[(initialRow / 2).round()][initialColumn] = Tile.Apple;
+
+    tiles[1][1] = Tile.RainbowApple;
   }
 
   void startTimer1(int milliseconds) {
@@ -121,17 +125,18 @@ class SnakeGame {
     //Second stage
     else if (score >= firstStageMax && score < secondStageMax) {
       if (secondStageIncrement) {
-        goldenAppleProbability += 1;
+        goldenAppleProbability += 5;
+        rainbowAppleProbability++;
         secondStageIncrement = false;
       }
       borderColor = alternateColor ? Colors.blue : Colors.pink;
-      
     }
 
     //Third stage
     else if (score >= secondStageMax && score < thirdStageMax) {
       if (thirdStageIncrement) {
-        goldenAppleProbability += 2;
+        goldenAppleProbability += 10;
+        rainbowAppleProbability++;
         thirdStageIncrement = false;
       }
       borderColor = alternateColor ? Colors.pink : Colors.yellow;
@@ -141,12 +146,11 @@ class SnakeGame {
     //Fourth stage
     else if (score >= thirdStageMax) {
       if (fourthStageIncrement) {
-        goldenAppleProbability += 3;
+        goldenAppleProbability += 15;
+        rainbowAppleProbability++;
         fourthStageIncrement = false;
       }
-      goldenAppleProbability += 30;
       borderColor = Colors.transparent;
-      //showBorder = false;
       opacity = 1;
     }
     
@@ -156,6 +160,7 @@ class SnakeGame {
         if (tiles[i][j] == Tile.Empty) list.add(EmptyTile(borderColor: borderColor));
         else if (tiles[i][j] == Tile.Apple) list.add(AppleTile(borderColor: borderColor));
         else if (tiles[i][j] == Tile.GoldenApple) list.add(GoldenAppleTile(borderColor: borderColor));
+        else if (tiles[i][j] == Tile.RainbowApple) list.add(RainbowAppleTile(borderColor: borderColor));
         else if (tiles[i][j] == Tile.Head) list.add(HeadTile(bodyUnlockable: bodyUnlockable, headUnlockable: headUnlockable, borderColor: borderColor));
         else if (tiles[i][j] == Tile.Body) list.add(BodyTile(bodyUnlockable: bodyUnlockable, borderColor: borderColor));
         else list.add(TailTile(bodyUnlockable: bodyUnlockable, borderColor: borderColor));
@@ -184,8 +189,10 @@ class SnakeGame {
       int r = rng.nextInt(emptyTiles.length == 1 ? 1 : emptyTiles.length - 1);
       int generationRow = emptyTiles[r].row;
       int generationColumn = emptyTiles[r].column;
-      int golden = rng.nextInt(10);
-      tiles[generationRow][generationColumn] = golden <= goldenAppleProbability ? Tile.GoldenApple : Tile.Apple;
+      int next = rng.nextInt(100);
+      if (next <= rainbowAppleProbability) tiles[generationRow][generationColumn] = Tile.RainbowApple;
+      else if (next > rainbowAppleProbability && next <= goldenAppleProbability) tiles[generationRow][generationColumn] = Tile.GoldenApple;
+      else tiles[generationRow][generationColumn] = Tile.Apple;
     }
   }
 
@@ -203,13 +210,20 @@ class SnakeGame {
 
     bool nextIsApple = tiles[nextTile.row][nextTile.column] == Tile.Apple;
     bool nextIsGoldenApple = tiles[nextTile.row][nextTile.column] == Tile.GoldenApple;
+    bool nextIsRainbowApple = tiles[nextTile.row][nextTile.column] == Tile.RainbowApple;
 
     int last = snakeCoordinates.length - 1;
     tiles[snakeCoordinates[last].row][snakeCoordinates[last].column] = Tile.Empty;
 
-    if (nextIsApple || nextIsGoldenApple) {
-      if (nextIsGoldenApple) {score += 5;}
-      else {score ++;}
+    if (rainbowAppleCooldown > 0) {
+      rainbowAppleCooldown--;
+      generateApple();
+    }
+
+    if (nextIsApple || nextIsGoldenApple || nextIsRainbowApple) {
+      if (nextIsRainbowApple) {score += 25; rainbowAppleCooldown = 4;}
+      else if (nextIsGoldenApple) score += 5;
+      else score ++;
       snakeCoordinates.add(SnakeCoordinates(snakeCoordinates[last].row, snakeCoordinates[last].column));
       tiles[snakeCoordinates[last].row][snakeCoordinates[last].column] = Tile.Tail;
       last++;

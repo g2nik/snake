@@ -19,16 +19,16 @@ class SnakeControl extends StatelessWidget {
     return swipe ? GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
         if (details.primaryVelocity > 0 && canChangeDirection && direction != Direction.Left && direction != Direction.Right) {
-          callback(Direction.Right, false);
+          callback(Direction.Right);
         } else if (details.primaryVelocity < 0 && canChangeDirection && direction != Direction.Right && direction != Direction.Left) {
-          callback(Direction.Left, false);
+          callback(Direction.Left);
         }
       },
       onVerticalDragEnd: (DragEndDetails details) {
         if (details.primaryVelocity > 0 && canChangeDirection && direction != Direction.Up && direction != Direction.Down) {
-          callback(Direction.Down, false);
+          callback(Direction.Down);
         } else if(details.primaryVelocity < 0 && canChangeDirection && direction != Direction.Down && direction != Direction.Up){
-          callback(Direction.Up, false);
+          callback(Direction.Up);
         }
       },
       child: child,
@@ -49,47 +49,42 @@ class SnakeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Preferences.getFont(),
-      builder: (context, AsyncSnapshot<String> snapshot) {
-        return !snapshot.hasData ? Center(child: CircularProgressIndicator())
-        : Stack(
-          alignment: Alignment.center,
-          children: [
-            !offset ? Container()
-            : Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: font ?? snapshot.data,
-                fontSize: size,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 5
-                  ..color = Colors.black,
-              ),
-            ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: font ?? snapshot.data,
-                fontSize: size,
-                color: color,
-              ),
-            ),
-          ],
-        );
-      },
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        !offset ? Container()
+        : Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Omegle",
+            fontSize: size,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 5
+              ..color = Colors.black,
+          ),
+        ),
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Omegle",
+            fontSize: size,
+            color: color,
+          ),
+        ),
+      ],
     );
   }
 }
 
 class SnakeButton extends StatelessWidget {
-  SnakeButton({String text, Function onPressed})
-  : this.text = text, this.onPressed = onPressed;
+  SnakeButton({String text, Color color, Function onPressed})
+  : this.text = text, this.color = color, this.onPressed = onPressed;
 
   final String text;
+  final Color color;
   final Function onPressed;
 
   @override
@@ -99,21 +94,22 @@ class SnakeButton extends StatelessWidget {
         child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 75, vertical: 25)),
+          padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 50, vertical: 25)),
           elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
-              side: BorderSide(color: Colors.amber, width: 5)
+              side: BorderSide(color: color, width: 5)
             )
           )
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 150, maxWidth: 300),
-            child: Text(text, textAlign: TextAlign.center, style: TextStyle(color: Colors.amber, fontSize: 30))
+            constraints: BoxConstraints(minWidth: 230, maxWidth: 230),
+            child: SnakeText(text: text, color: Colors.green[300], size: 30, offset: true),
+            //Text(text, textAlign: TextAlign.center, style: TextStyle(color: color, fontSize: 30))
           ),
         ),
       ),
