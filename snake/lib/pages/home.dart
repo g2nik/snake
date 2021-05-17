@@ -21,19 +21,27 @@ class _HomeState extends State<Home> {
     //We initialize the music player
     await _audioPlayer.setAsset("music/Bustre - Combine.mp3");
     await _audioPlayer.setLoopMode(LoopMode.all);
-    _audioPlayer.play();
+    //_audioPlayer.play();
   }
 
   Future loadVideoPlayer() async {
     //We initialize the video controller, set it on repeat and play it
     _videoController = VideoPlayerController.asset("videos/space.mp4");
+    await _videoController.setVolume(0);
     await _videoController.initialize();
-    await _videoController.setLooping(true);
-    _videoController.play().then((value) => reload());
-    //reload();
+    await _videoController.setLooping(true).then((value) async {
+      //await Future.delayed(const Duration(milliseconds: 500));
+      reload();
+    });
+    // _videoController.play().then((value) async {
+    //   await Future.delayed(const Duration(milliseconds: 500));
+    //   reload();
+    // });
   }
 
-  void reload() => setState(() {});
+  void reload() {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -52,6 +60,7 @@ class _HomeState extends State<Home> {
   
   @override
   Widget build(BuildContext context) {
+    _audioPlayer.play();
     _videoController.play();
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -87,7 +96,7 @@ class _HomeState extends State<Home> {
                 color: Colors.green[300],
                 onPressed: () async {
                   bool swipe = await Preferences.getSwipe();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SnakePage(_videoController, swipe)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SnakePage(swipe)));
                 }
               ),
               SizedBox(height: 50),

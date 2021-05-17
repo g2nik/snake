@@ -132,8 +132,6 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
             ),
           ],
         ),
-        
-        
       ]
     );
   }

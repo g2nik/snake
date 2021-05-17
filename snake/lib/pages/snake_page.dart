@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'dart:ffi';
+import 'package:just_audio/just_audio.dart';
 import 'package:snake/models/preferences.dart';
 import 'package:snake/models/snake_game.dart';
 import 'package:flutter/material.dart';
+import 'package:snake/models/tiles.dart';
 import 'package:snake/widgets.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sensors/sensors.dart';
 
 class SnakePage extends StatefulWidget {
-  SnakePage(this._controller, this.swipe);
-
-  VideoPlayerController _controller;
+  SnakePage(this.swipe);
   bool swipe;
 
   @override
@@ -31,8 +30,9 @@ class _SnakePageState extends State<SnakePage> {
   String headUnlockable;
 
   double sensitivity;
-
   StreamSubscription gyroscopeSubscription;
+
+  AudioPlayer audio = AudioPlayer();
 
   Future<bool> startGame() async {
     if (loaded) {
@@ -43,6 +43,7 @@ class _SnakePageState extends State<SnakePage> {
       _continueGame = true;
       _direction = Direction.Up;
       _time = 0;
+      audio.setAsset("sound/bite.mp3");
       List<dynamic> preferences = await Preferences.getAllPreferences();
       int rows = preferences[0];
       int columns = preferences[1];
@@ -59,38 +60,43 @@ class _SnakePageState extends State<SnakePage> {
 
   void _startTimer(int milliseconds) {
     Duration moment =  Duration(milliseconds: milliseconds);
-    _timer = Timer.periodic(moment, (Timer timer) {
-        setState(() {
-          if (_time == 999999999) timer.cancel();
+    _timer = Timer.periodic(moment, (Timer timer) async {
+      if (_time == 999999999) timer.cancel();
+      bool won = _snake.won(_direction);
 
-          bool won = _snake.won(_direction);
-
-          if (won) {
-
-            _snake.score += 15;
-            if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
-            gameWon(_snake.score > highestScore);
-            _timer.cancel();
-
-          } else {
-
-            _continueGame = _snake.canMoveForward(_direction);
-            //print("continue game? (can move forward) $_continueGame");
-
-            if (_continueGame) {
-              _time++;
-              _snake.moveForward(_direction);
-              canChangeDirection = true;
-            } else {
-              //Game over
-              if (_snake.timer1 != null) _snake.timer1.cancel();
-              if (_snake.timer2 != null) _snake.timer2.cancel();
-              if (_timer != null) _timer.cancel();
-              if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
-              gameOver(_snake.score > highestScore);
-            }
+      if (won) {
+        await audio.setAsset("sound/win.mp3");
+        audio.play().then((value) => audio.stop());
+        _snake.score += 15;
+        if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
+        gameWon(_snake.score > highestScore);
+        _timer.cancel();
+      } else {
+        _continueGame = _snake.canMoveForward(_direction);
+        if (_continueGame) {
+          int nextRow = _snake.getNextTileCoordinates(_direction).row;
+          int nextColumn = _snake.getNextTileCoordinates(_direction).column;
+          if (_snake.tiles[nextRow][nextColumn] == Tile.Apple
+          || _snake.tiles[nextRow][nextColumn] == Tile.GoldenApple
+          || _snake.tiles[nextRow][nextColumn] == Tile.RainbowApple)
+          {
+            audio.play().then((value) => audio.stop());
           }
-        });
+          _time++;
+          _snake.moveForward(_direction);
+          canChangeDirection = true;
+        } else {
+          //Game over
+          if (_snake.timer1 != null) _snake.timer1.cancel();
+          if (_snake.timer2 != null) _snake.timer2.cancel();
+          if (_timer != null) _timer.cancel();
+          if (_snake.score > highestScore) Preferences.setHighScore(_snake.score);
+          await audio.setAsset("sound/gg.mp3");
+          audio.play().then((value) => audio.stop());
+          gameOver(_snake.score > highestScore);
+        }
+      }
+      setState(() {});
       },
     );
   }
@@ -271,8 +277,10 @@ class _SnakePageState extends State<SnakePage> {
   }
 
   void startGyroscopeControl() {
-    double verticalSensitivity = .5;
-    double horizontalSensitivity = 1.5;
+    double verticalSensitivity = 1.25;
+    double downSensitivity = .75;
+    double horizontalSensitivity = 1;
+
 
     gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
       List<double> gyroscopeValues = [event.x, event.y, event.z];
@@ -287,7 +295,7 @@ class _SnakePageState extends State<SnakePage> {
         _direction = Direction.Down;
       } 
       //Move Down
-      else if (gyroscopeValues[0] < -verticalSensitivity
+      else if (gyroscopeValues[0] < -downSensitivity
       && canChangeDirection
       && _direction != Direction.Up
       && _direction != Direction.Down)
@@ -316,9 +324,14 @@ class _SnakePageState extends State<SnakePage> {
     });
   }
 
+  void loadAudio() async {
+    await audio.setAsset("sound/bite.mp3");
+  }
+
   @override
   void initState() {
     super.initState();
+    loadAudio();
     if (!widget.swipe) startGyroscopeControl();
   }
 
@@ -342,7 +355,6 @@ class _SnakePageState extends State<SnakePage> {
         : WillPopScope(
           onWillPop: () {},
           child: Scaffold(
-              
               backgroundColor: Colors.black,
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -362,27 +374,23 @@ class _SnakePageState extends State<SnakePage> {
                     Opacity(
                       opacity: _snake.opacity,
                       child: SizedBox.expand(
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: SizedBox(
-                            width: widget._controller.value.size?.width ?? 0,
-                            height: widget._controller.value.size?.height ?? 0,
-                            child: VideoPlayer(widget._controller),
-                          ),
-                        )
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("images/blue.jpg"),
+                              fit: BoxFit.cover
+                            )
+                          )
+                        ),
                       ),
                     ),
                     Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.cyan)
-                        ),
-                        child: GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          crossAxisCount: _snake.columns,
-                          children: _snake.getTiles()
-                        ),
-                      )
+                      child: GridView.count(
+                        addRepaintBoundaries: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: _snake.columns,
+                        children: _snake.getTiles()
+                      ),
                     ),
                   ]
                 ),

@@ -44,27 +44,34 @@ class SnakeGame {
   String bodyUnlockable;
   String headUnlockable;
 
-  final int firstStageMax = 10;
-  final int secondStageMax = 20;
-  final int thirdStageMax = 40;
+  int firstStageMax = 10;
+  int secondStageMax = 20;
+  int thirdStageMax = 40;
   bool secondStageIncrement = true;
   bool thirdStageIncrement = true;
   bool fourthStageIncrement = true;
 
 
   SnakeGame(int rows, int columns, String bodyUnlockable, String headUnlockable) {
+    
     this.bodyUnlockable = bodyUnlockable;
     this.headUnlockable = headUnlockable;
     this.rows = rows;
-    this.columns = (rows / 2).round() + 1;
     this.columns = columns;
     initialColumn = (columns / 2).round();
     initialRow = (rows / 2).round();
+    int tiles = rows * columns;
+
+    int stage = (tiles / 4).round();
+    firstStageMax = stage;
+    secondStageMax = stage * 2;
+    thirdStageMax = stage * 3;
+
     startCoordinates();
     startTiles();
     startTimer1(2000);
     startTimer1(700);
-  }  
+  }
 
   void startCoordinates() {
     snakeCoordinates = [];
@@ -77,7 +84,9 @@ class SnakeGame {
   void startTiles() {
     tiles = List.generate(rows, (i) => List(columns), growable: false);
     for (int i = 0; i < tiles.length; i++) {
-      for (int j = 0; j < tiles[0].length; j++) tiles[i][j] = Tile.Empty;
+      for (int j = 0; j < tiles[0].length; j++) {
+        tiles[i][j] = Tile.Empty;
+      }
     }
 
     tiles[initialRow][initialColumn] = Tile.Head;

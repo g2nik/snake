@@ -12,7 +12,7 @@ Future main() async {
     firstTime = true;
     await Preferences.setDefaultPreferences();
   }
-  firstTime = true;
+  //firstTime = true;
   runApp(SnakeApp(firstTime));
 }
 

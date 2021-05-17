@@ -51,15 +51,6 @@ class _SettingsState extends State<Settings> {
 
           return Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              brightness: Brightness.dark,
-              leading: IconButton(
-                icon: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 50),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
             body: Stack(
               children: [
                 SizedBox.expand(
@@ -99,14 +90,14 @@ class _SettingsState extends State<Settings> {
                         ],
                       ),
                       SizedBox(height: 75),
-                      SnakeText(text: "-", color: Colors.amber, size: 35, offset: true),
+                      SnakeText(text: "-", color: Colors.green[300], size: 35, offset: true),
                       SizedBox(height: 20),
-                      SnakeText(text: "ROWS: $rows", color: Colors.amber, size: 25, offset: true),
+                      SnakeText(text: "ROWS: $rows", color: Colors.green[300], size: 25, offset: true),
                       Slider(
                         min: 5,
                         max: 40,
-                        activeColor: Colors.amber,
-                        inactiveColor: Colors.amber[800],
+                        activeColor: Colors.green[300],
+                        inactiveColor: Colors.green[800],
                         value: rows.toDouble(), onChanged: (value) {
                           setState(() {
                             rows = value.toInt();
@@ -116,12 +107,12 @@ class _SettingsState extends State<Settings> {
                       ),
                       SizedBox(height: 50),
 
-                      SnakeText(text: "COLUMNS: $columns", color: Colors.amber, size: 25, offset: true),
+                      SnakeText(text: "COLUMNS: $columns", color: Colors.green[300], size: 25, offset: true),
                       Slider(
                         min: 5,
                         max: 40,
-                        activeColor: Colors.amber,
-                        inactiveColor: Colors.amber[800],
+                        activeColor: Colors.green[300],
+                        inactiveColor: Colors.green[800],
                         value: columns.toDouble(), onChanged: (value) {
                           setState(() {
                             columns = value.toInt();
@@ -131,13 +122,13 @@ class _SettingsState extends State<Settings> {
                       ),
                       SizedBox(height: 50),
 
-                      SnakeText(text: "SPEED: $sliderSpeed", color: Colors.amber, size: 25, offset: true),
+                      SnakeText(text: "SPEED: $sliderSpeed", color: Colors.green[300], size: 25, offset: true),
                       Slider(
                         min: 1,
                         max: 10,
                         divisions: 9,
-                        activeColor: Colors.amber,
-                        inactiveColor: Colors.amber[800],
+                        activeColor: Colors.green[300],
+                        inactiveColor: Colors.green[800],
                         value: sliderSpeed.toDouble(),
                         onChanged: (value) {
                           setState(() {

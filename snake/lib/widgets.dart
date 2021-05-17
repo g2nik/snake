@@ -148,7 +148,7 @@ class UnlockableButton extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: 75, maxHeight: 100),
                 child: SnakeText(
                   text: highestScore >= unlockingScore ? title : "Get $unlockingScore\npoints",
-                  color: Colors.amber, size: 30, offset: true
+                  color: Colors.green[300], size: 30, offset: true
                 ),
               ),
               SizedBox(height: 10),
@@ -162,7 +162,7 @@ class UnlockableButton extends StatelessWidget {
                   }
                 },
                 child: CircleAvatar(
-                  backgroundColor: currentUnlockable == unlockable ? Colors.amber : Colors.grey[800],
+                  backgroundColor: currentUnlockable == unlockable ? Colors.green[300] : Colors.grey[800],
                   radius: 60,
                   child: CircleAvatar(
                     radius: 55,

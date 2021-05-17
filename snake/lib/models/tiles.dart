@@ -1,6 +1,5 @@
-import 'dart:async';
 import 'dart:ui';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 enum Tile {
@@ -22,6 +21,9 @@ class SnakeStyle {
     else if (unlockable == "red") colors = [Colors.redAccent, Colors.red[900]];
     else if (unlockable == "blue") colors = [Colors.blueAccent, Colors.blue[900]];
     else if (unlockable == "yellow") colors = [Colors.yellow, Colors.amber];
+    else if (unlockable == "teal") colors = [Colors.teal[50], Colors.tealAccent];
+    else if (unlockable == "white") colors = [Colors.white, Colors.white];
+    else if (unlockable == "black") colors = [Colors.black, Colors.black];
     else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
 
     return LinearGradient(
@@ -39,6 +41,9 @@ class SnakeStyle {
     else if (unlockable == "red") colors = [Colors.redAccent, Colors.red[900]];
     else if (unlockable == "blue") colors = [Colors.blueAccent, Colors.blue[900]];
     else if (unlockable == "yellow") colors = [Colors.amber, Colors.amberAccent];
+    else if (unlockable == "teal") colors = [Colors.tealAccent, Colors.teal];
+    else if (unlockable == "white") colors = [Colors.white, Colors.white];
+    else if (unlockable == "black") colors = [Colors.black, Colors.black];
     else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
 
     return LinearGradient(
@@ -56,6 +61,9 @@ class SnakeStyle {
     else if (unlockable == "red") colors = [Colors.redAccent, Colors.orange];
     else if (unlockable == "blue") colors = [Colors.lightBlueAccent[100], Colors.lightBlueAccent];
     else if (unlockable == "yellow") colors = [Colors.yellowAccent, Colors.white];
+    else if (unlockable == "teal") colors = [Colors.teal[50], Colors.tealAccent[100]];
+    else if (unlockable == "white") colors = [Colors.white, Colors.white];
+    else if (unlockable == "black") colors = [Colors.black, Colors.black];
     else if (unlockable == "ghost") colors = [Colors.transparent, Colors.transparent];
 
     return LinearGradient(

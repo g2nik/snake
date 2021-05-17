@@ -25,17 +25,13 @@ class _UnlockablesState extends State<Unlockables> {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else {
-
           return Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                 elevation: 0,
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 brightness: Brightness.dark,
-                leading: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 50),
-                  onPressed: () => Navigator.pop(context),
-                ),
               ),
               body: Stack(
                 children: [
