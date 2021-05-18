@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snake/models/tiles.dart';
 import 'package:snake/widgets.dart';
 
+//Here you are informed what each apple does
 class TutorialInfo extends StatelessWidget {
   TutorialInfo({Function function1, Function function2})
   : f1 = function1, f2 = function2;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snake/widgets.dart';
 
+//Here you are informed you can customize your snake
 class TutorialCustomization extends StatelessWidget {
   TutorialCustomization({Function function1, Function function2})
   : f1 = function1, f2 = function2;

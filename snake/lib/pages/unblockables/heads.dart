@@ -6,6 +6,7 @@ class UnlockableHeads extends StatefulWidget {
   _UnlockableHeadsState createState() => _UnlockableHeadsState();
 }
 
+//In this page we have the unlockables for the masks of the snake
 class _UnlockableHeadsState extends State<UnlockableHeads> {
   void reload() => setState(() {});
 
@@ -40,7 +41,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Kyojuro\nRengoku",
                   unlockable: "rengoku",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 15,
                   child: Image.asset("images/rengoku_avatar.png"),
                   onPressed: reload
                 ),
@@ -49,7 +50,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Master\nChief",
                   unlockable: "master_chief",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 20,
                   child: Image.asset("images/master_chief.png"),
                   onPressed: reload
                 ),
@@ -58,7 +59,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Bart",
                   unlockable: "bart",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 25,
                   child: Image.asset("images/bart.png"),
                   onPressed: reload
                 ),
@@ -67,7 +68,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Darth\nVader",
                   unlockable: "vader",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 30,
                   child: Image.asset("images/vader.png"),
                   onPressed: reload
                 ),
@@ -79,7 +80,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Bruce\nLee",
                   unlockable: "bruce_lee",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 0,
                   child: Image.asset("images/bruce_lee_avatar.png"),
                   onPressed: reload
                 ),
@@ -97,7 +98,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Michael\nJackson",
                   unlockable: "michael_jackson",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 15,
                   child: Image.asset("images/michael_jackson_avatar.png"),
                   onPressed: reload
                 ),
@@ -106,7 +107,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Napoleon\nBonaparte",
                   unlockable: "napoleon",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 20,
                   child: Image.asset("images/napoleon_avatar.png"),
                   onPressed: reload
                 ),
@@ -115,7 +116,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Nikolai II",
                   unlockable: "zar",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 25,
                   child: Image.asset("images/zar_avatar.png"),
                   onPressed: reload
                 ),
@@ -124,7 +125,7 @@ class _UnlockableHeadsState extends State<UnlockableHeads> {
                   title: "Nikola\nTesla",
                   unlockable: "tesla",
                   head: true,
-                  unlockingScore: 10,
+                  unlockingScore: 30,
                   child: Image.asset("images/tesla_avatar.png"),
                   onPressed: reload
                 ),

@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+//This class allows to set preferences, variables accesible from every screen of the app
 class Preferences {
 
   static Future<bool> getFirstTime() async {

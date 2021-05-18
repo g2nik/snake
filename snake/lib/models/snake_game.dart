@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:snake/models/tiles.dart';
 
+//This is an enum that we use to determine the snake direction
 enum Direction { 
   Up,
   Down,
@@ -10,6 +11,7 @@ enum Direction {
   Right
 }
 
+//This class is to store x and y coordinates
 class SnakeCoordinates {
   SnakeCoordinates(this.row, this.column);
 
@@ -19,8 +21,8 @@ class SnakeCoordinates {
 
 class SnakeGame {
 
+  //We initialize a set of values
   int score = 0;
-
   int initialRow;
   int initialColumn;
   int rows = 20;
@@ -51,7 +53,8 @@ class SnakeGame {
   bool thirdStageIncrement = true;
   bool fourthStageIncrement = true;
 
-
+  //In the constructor we initialize essential variables, create the grid,
+  //initialize a list that contains the snake coordinates, etc...
   SnakeGame(int rows, int columns, String bodyUnlockable, String headUnlockable) {
     
     this.bodyUnlockable = bodyUnlockable;
@@ -81,6 +84,7 @@ class SnakeGame {
     snakeCoordinates.add(SnakeCoordinates(initialRow + 3, initialColumn));
   }
 
+  //We set every tile to empty and assign every coordinate to its respective tile
   void startTiles() {
     tiles = List.generate(rows, (i) => List(columns), growable: false);
     for (int i = 0; i < tiles.length; i++) {
@@ -98,6 +102,8 @@ class SnakeGame {
     tiles[1][1] = Tile.RainbowApple;
   }
 
+
+  //We use timer1 and 2 to alternate the grid color
   void startTimer1(int milliseconds) {
     Duration moment =  Duration(milliseconds: milliseconds);
     timer1 = Timer.periodic(moment, (Timer timer) {
@@ -123,16 +129,18 @@ class SnakeGame {
   }
 
   List<Widget> getTiles() {
-    bool showBorder = true;
     Color borderColor = Colors.cyan;
+
+    //We divide the game into 4 stages
+
 
     //First stage
     if (score >= 1 && score < firstStageMax) {
-      //generateApple();
     }
 
     //Second stage
     else if (score >= firstStageMax && score < secondStageMax) {
+      //If the second stage started, we increase the probability of a golden or rainbow apple appearing
       if (secondStageIncrement) {
         goldenAppleProbability += 5;
         rainbowAppleProbability++;
@@ -163,6 +171,7 @@ class SnakeGame {
       opacity = 1;
     }
     
+    //Based on the tiles array we return 
     List<Widget> list = [];
     for (int i = 0; i < tiles.length; i++) {
       for (int j = 0; j < tiles[0].length; j++) {

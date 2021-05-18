@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snake/models/preferences.dart';
-import 'package:snake/models/tiles.dart';
 import 'package:snake/pages/home.dart';
 import 'package:snake/pages/tutorial/controls.dart';
 import 'package:snake/pages/tutorial/customization.dart';
@@ -11,11 +9,11 @@ class Tutorial extends StatefulWidget {
   _TutorialState createState() => _TutorialState();
 }
 
+//This page shows every aspect of the game
 class _TutorialState extends State<Tutorial> with SingleTickerProviderStateMixin {
   TabController _tabController;
   bool swipe;
   
-
   @override
   void initState() {
     super.initState();

@@ -3,20 +3,15 @@ import 'package:snake/models/preferences.dart';
 import 'package:snake/pages/unblockables/bodies.dart';
 import 'package:snake/pages/unblockables/heads.dart';
 import 'package:snake/widgets.dart';
-import 'package:video_player/video_player.dart';
 
 class Unlockables extends StatefulWidget {
-  Unlockables(this._controller);
-  VideoPlayerController _controller;
-
   @override
   _UnlockablesState createState() => _UnlockablesState();
 }
 
+//In this page you can select "skins" and "masks" for the snake
+//They can be unlocked depending on your highest score
 class _UnlockablesState extends State<Unlockables> {
-
-  void reload() => setState(() {});
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -35,14 +30,12 @@ class _UnlockablesState extends State<Unlockables> {
               ),
               body: Stack(
                 children: [
-                  SizedBox.expand(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: widget._controller.value.size?.width ?? 0,
-                        height: widget._controller.value.size?.height ?? 0,
-                        child: VideoPlayer(widget._controller),
-                      ),
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/blue.jpg"),
+                        fit: BoxFit.cover
+                      )
                     )
                   ),
                   DefaultTabController(
@@ -52,10 +45,11 @@ class _UnlockablesState extends State<Unlockables> {
                         children: [
                           SizedBox(height: 50),
                           TabBar(
-                            indicatorColor: Colors.amber,
+                            indicatorColor: Colors.green[300],
                             tabs: [
-                              Tab(child: SnakeText(text: "BODY", color: Colors.amber, size: 25, offset: true)),
-                              Tab(child: SnakeText(text: "HEAD", color: Colors.amber, size: 25, offset: true)),
+                              //We use tabs to show 2 different pages
+                              Tab(child: SnakeText(text: "BODY", color: Colors.green[300], size: 25, offset: true)),
+                              Tab(child: SnakeText(text: "HEAD", color: Colors.green[300], size: 25, offset: true)),
                             ],
                           ),
                           Expanded(

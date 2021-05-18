@@ -13,55 +13,32 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //This controller will play a video in the background
-  VideoPlayerController _videoController;
+  //This controller will play music in the background
   AudioPlayer _audioPlayer = AudioPlayer();
 
   Future loadMusicPLayer() async {
     //We initialize the music player
     await _audioPlayer.setAsset("music/Bustre - Combine.mp3");
     await _audioPlayer.setLoopMode(LoopMode.all);
-    //_audioPlayer.play();
-  }
-
-  Future loadVideoPlayer() async {
-    //We initialize the video controller, set it on repeat and play it
-    _videoController = VideoPlayerController.asset("videos/space.mp4");
-    await _videoController.setVolume(0);
-    await _videoController.initialize();
-    await _videoController.setLooping(true).then((value) async {
-      //await Future.delayed(const Duration(milliseconds: 500));
-      reload();
-    });
-    // _videoController.play().then((value) async {
-    //   await Future.delayed(const Duration(milliseconds: 500));
-    //   reload();
-    // });
-  }
-
-  void reload() {
-    setState(() {});
+    _audioPlayer.play();
   }
 
   @override
   void initState() {
     super.initState();
     loadMusicPLayer();
-    loadVideoPlayer();
   }
 
   @override
   void dispose() {
-    //When the widget is destroyed, it also destroys the controller and the audio player
+    //When the widget is destroyed, it also destroys the audio player
     _audioPlayer.dispose();
-    _videoController.dispose();
     super.dispose();
   }
   
   @override
   Widget build(BuildContext context) {
     _audioPlayer.play();
-    _videoController.play();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -72,15 +49,13 @@ class _HomeState extends State<Home> {
       //We use a stack to have 2 layers, the background and the foreground
       body: Stack(
         children: [
-          //Here in the bcakground we display the video
-          SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: SizedBox(
-                width: _videoController.value.size?.width ?? 0,
-                height: _videoController.value.size?.height ?? 0,
-                child: VideoPlayer(_videoController),
-              ),
+          //Here in the background we display the video
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/blue.jpg"),
+                fit: BoxFit.cover
+              )
             )
           ),
           //This is the content of the foreground, which includes the title and the buttons
@@ -88,7 +63,8 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              //We use custom widgets like SnakeText and SnakeButton, which have their own style
+              //We use custom widgets like SnakeText and SnakeButton,
+              //which have their own style and open a new page
               SnakeText(text: "SNAKE", color: Colors.green[300], size: 75, offset: true),
               SizedBox(height: 100),
               SnakeButton(
@@ -101,10 +77,10 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 50),
               SnakeButton(
-                text: "SETTTINGS",
+                text: "SETTINGSSS",
                 color: Colors.green[300],
                 onPressed: () async {
-                  await Navigator.push(context, MaterialPageRoute(builder: (context) => Settings(_videoController)));
+                  await Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
                   setState(() {});
                 }
               ),
@@ -113,18 +89,10 @@ class _HomeState extends State<Home> {
                 text: "UNLOCKABLES",
                 color: Colors.green[300],
                 onPressed: () async {
-                  await Navigator.push(context, MaterialPageRoute(builder: (context) => Unlockables(_videoController)));
+                  await Navigator.push(context, MaterialPageRoute(builder: (context) => Unlockables()));
                   setState(() {});
                 }
               ),
-              // SizedBox(height: 50),
-              // SnakeButton(
-              //   text: "RESET",
-              //   color: Colors.green[300],
-              //   onPressed: () async {
-              //     await Preferences.setDefaultPreferences();
-              //   }
-              // ),
             ],
           ),
         ),

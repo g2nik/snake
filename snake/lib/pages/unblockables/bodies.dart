@@ -6,6 +6,7 @@ class UnlockableBodies extends StatefulWidget {
   _UnlockableBodiesState createState() => _UnlockableBodiesState();
 }
 
+//In this page we have the unlockables for the skins of the snake
 class _UnlockableBodiesState extends State<UnlockableBodies> {
   void reload() => setState(() {});
 
@@ -18,6 +19,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
           children: [
             Column(
               children: [
+                //We use a custom widget which selects which widget is currently active
                 UnlockableButton(
                   title: "Default",
                   unlockable: "none",
@@ -60,7 +62,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Teal",
                   unlockable: "teal",
-                  unlockingScore: 0,
+                  unlockingScore: 5,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.tealAccent, size: 100),
                   onPressed: reload
@@ -69,7 +71,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "White",
                   unlockable: "white",
-                  unlockingScore: 0,
+                  unlockingScore: 10,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.white, size: 100),
                   onPressed: reload
@@ -78,7 +80,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Black",
                   unlockable: "black",
-                  unlockingScore: 0,
+                  unlockingScore: 15,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.black, size: 100),
                   onPressed: reload
@@ -87,7 +89,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Ghost",
                   unlockable: "ghost",
-                  unlockingScore: 500,
+                  unlockingScore: 20,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.cyan[200], size: 100),
                   onPressed: reload

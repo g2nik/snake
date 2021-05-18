@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snake/models/preferences.dart';
 import 'package:snake/widgets.dart';
 
+//Here you can select the controls
 class TutorialControls extends StatelessWidget {
   TutorialControls({bool swipe, Function function1, Function function2})
   : this.swipe = swipe, f1 = function1, f2 = function2;
