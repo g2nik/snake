@@ -5,9 +5,9 @@ import 'package:snake/models/snake_game.dart';
 import 'package:flutter/material.dart';
 import 'package:snake/models/tiles.dart';
 import 'package:snake/widgets.dart';
-import 'package:video_player/video_player.dart';
 import 'package:sensors/sensors.dart';
 
+//This takes a swipe bool which determines the contros used in the game
 class SnakePage extends StatefulWidget {
   SnakePage(this.swipe);
   bool swipe;
@@ -17,7 +17,6 @@ class SnakePage extends StatefulWidget {
 }
 
 class _SnakePageState extends State<SnakePage> {
-
   bool loaded = false;
   bool canChangeDirection = true;
   Timer _timer;
@@ -34,6 +33,7 @@ class _SnakePageState extends State<SnakePage> {
 
   AudioPlayer audio = AudioPlayer();
 
+  //This function starts a game
   Future<bool> startGame() async {
     if (loaded) {
       return false;
@@ -58,6 +58,7 @@ class _SnakePageState extends State<SnakePage> {
     }
   }
 
+  //This function starts the timer and determines if the player has won lost or can continue to play
   void _startTimer(int milliseconds) {
     Duration moment =  Duration(milliseconds: milliseconds);
     _timer = Timer.periodic(moment, (Timer timer) async {
@@ -101,6 +102,7 @@ class _SnakePageState extends State<SnakePage> {
     );
   }
 
+  //Popup that shows when the player has won
   void gameWon(bool newHighScore) {
     showDialog(
       barrierDismissible: false,
@@ -186,6 +188,7 @@ class _SnakePageState extends State<SnakePage> {
     );
   }
 
+  //Popup that shows when the player has lost
   void gameOver(bool newHighScore) {
     showDialog(
       barrierDismissible: false,
@@ -271,11 +274,13 @@ class _SnakePageState extends State<SnakePage> {
     );
   }
 
+  //Changes the direction and prevents the player from moving the snake this turn or movement
   void controlCallback(Direction direction) {
     _direction = direction;
     this.canChangeDirection = false;
   }
 
+  //This function changes the direction of the snake dpending on the phone rotation
   void startGyroscopeControl() {
     double verticalSensitivity = 1.25;
     double downSensitivity = .75;
@@ -324,6 +329,7 @@ class _SnakePageState extends State<SnakePage> {
     });
   }
 
+  //Sets the audio player to play the bite sound
   void loadAudio() async {
     await audio.setAsset("sound/bite.mp3");
   }
@@ -332,11 +338,13 @@ class _SnakePageState extends State<SnakePage> {
   void initState() {
     super.initState();
     loadAudio();
+    //If the swipe bool is false start the gyroscope controls
     if (!widget.swipe) startGyroscopeControl();
   }
 
   @override
   void dispose() async {
+    //Disposes of all the timers and the gyroscope subscription
     if (_snake.score > highestScore) await Preferences.setHighScore(_snake.score);
     if (_snake.timer1 != null) _snake.timer1.cancel();
     if (_snake.timer2 != null) _snake.timer2.cancel();
@@ -372,6 +380,7 @@ class _SnakePageState extends State<SnakePage> {
                 child: Stack(
                   children: [
                     Opacity(
+                      //Depending on the stage this will be more transparent to show the background
                       opacity: _snake.opacity,
                       child: SizedBox.expand(
                         child: Container(
@@ -384,6 +393,7 @@ class _SnakePageState extends State<SnakePage> {
                         ),
                       ),
                     ),
+                    //This widget displays the grid
                     Center(
                       child: GridView.count(
                         addRepaintBoundaries: true,

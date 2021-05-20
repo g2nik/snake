@@ -133,10 +133,8 @@ class SnakeGame {
 
     //We divide the game into 4 stages
 
-
     //First stage
-    if (score >= 1 && score < firstStageMax) {
-    }
+    if (score >= 1 && score < firstStageMax) {}
 
     //Second stage
     else if (score >= firstStageMax && score < secondStageMax) {
@@ -187,6 +185,7 @@ class SnakeGame {
     return list;
   }
 
+  //Depending on the direction we get the coordinates of the next tile we are facing
   SnakeCoordinates getNextTileCoordinates(Direction direction) {
     if (direction == Direction.Up) return SnakeCoordinates(snakeCoordinates[0].row - 1, snakeCoordinates[0].column);
     else if (direction == Direction.Down) return SnakeCoordinates(snakeCoordinates[0].row + 1, snakeCoordinates[0].column);
@@ -194,6 +193,7 @@ class SnakeGame {
     else return SnakeCoordinates(snakeCoordinates[0].row, snakeCoordinates[0].column - 1);
   }
 
+  //Generates an apple on an empty tile
   void generateApple() {
     List<SnakeCoordinates> emptyTiles = [];
     for (int i = 0; i < tiles.length; i++) {
@@ -208,14 +208,18 @@ class SnakeGame {
       int generationRow = emptyTiles[r].row;
       int generationColumn = emptyTiles[r].column;
       int next = rng.nextInt(100);
+
+      //Depending on the probability it generates a rainbow, golden or red apple
       if (next <= rainbowAppleProbability) tiles[generationRow][generationColumn] = Tile.RainbowApple;
       else if (next > rainbowAppleProbability && next <= goldenAppleProbability) tiles[generationRow][generationColumn] = Tile.GoldenApple;
       else tiles[generationRow][generationColumn] = Tile.Apple;
     }
   }
 
+  //Checks if the snake occupies the whole grid. If it does the game is won
   bool won(Direction direction) => snakeCoordinates.length == rows * columns;
 
+  //Checks if the next tile is inside the array and is not a body tile
   bool canMoveForward(Direction direction) {
     SnakeCoordinates nextTile = getNextTileCoordinates(direction);
     return (nextTile.row >= 0 && nextTile.column >= 0
@@ -223,6 +227,7 @@ class SnakeGame {
     && (tiles[nextTile.row][nextTile.column] != Tile.Body);
   }
 
+  //Changes the snake's coordinates and repaints the tiles array
   void moveForward(Direction direction) {
     SnakeCoordinates nextTile = getNextTileCoordinates(direction);
 
@@ -233,11 +238,14 @@ class SnakeGame {
     int last = snakeCoordinates.length - 1;
     tiles[snakeCoordinates[last].row][snakeCoordinates[last].column] = Tile.Empty;
 
+    //If the rainbow apple cooldown is greater than 0 it generates an apple
     if (rainbowAppleCooldown > 0) {
       rainbowAppleCooldown--;
       generateApple();
     }
 
+    //In case the snake eats an apple the app doesn't "move" the snake
+    //Instead it just adds a new coordinate to where the apple was, increasing the snake's lenght
     if (nextIsApple || nextIsGoldenApple || nextIsRainbowApple) {
       if (nextIsRainbowApple) {score += 25; rainbowAppleCooldown = 4;}
       else if (nextIsGoldenApple) score += 5;
@@ -248,13 +256,13 @@ class SnakeGame {
       generateApple();
     }
 
-    //Reasign snake coordinates
+    //Reasigns the snake coordinates
     for (int i = snakeCoordinates.length - 1; i >= 0; i--) {
       if (i == 0) snakeCoordinates[0] = SnakeCoordinates(nextTile.row, nextTile.column);
       else snakeCoordinates[i] = snakeCoordinates[i - 1];
     }
 
-    //Paint snake coordinates
+    //Paints the tiles according to the snake coordinates
     for (int i = 0; i <= snakeCoordinates.length - 1; i++) {
       if (i == 0) tiles[nextTile.row][nextTile.column] = Tile.Head;
       else if (i == last) tiles[snakeCoordinates[last].row][snakeCoordinates[last].column] = Tile.Tail;

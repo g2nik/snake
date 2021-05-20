@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:snake/models/preferences.dart';
 import 'package:snake/models/snake_game.dart';
 
+//This widget allows the control of the snake depending on how the player swiped
 class SnakeControl extends StatelessWidget {
   SnakeControl({Direction direction, bool canChangeDirection, bool swipe, Widget child, Function callback})
   : this.direction = direction, this.canChangeDirection = canChangeDirection, this.swipe = swipe,
@@ -37,6 +38,7 @@ class SnakeControl extends StatelessWidget {
   }
 }
 
+//A custom text widget
 class SnakeText extends StatelessWidget {
   SnakeText({String text, String font, Color color, double size, bool offset})
   : this.text = text, this.font = font, this.color = color, this.size = size, this.offset = offset;
@@ -79,6 +81,7 @@ class SnakeText extends StatelessWidget {
   }
 }
 
+//A custom button widget with translucid background
 class SnakeButton extends StatelessWidget {
   SnakeButton({String text, Color color, Function onPressed})
   : this.text = text, this.color = color, this.onPressed = onPressed;
@@ -117,6 +120,7 @@ class SnakeButton extends StatelessWidget {
   }
 }
 
+//This button allows to select an unlockable
 class UnlockableButton extends StatelessWidget {
   UnlockableButton({String title, String unlockable, int unlockingScore, bool head, Widget child, Function onPressed})
   : this.title = title, this.unlockable = unlockable, this.unlockingScore = unlockingScore, this.head = head, this.child = child, this.onPressed = onPressed;

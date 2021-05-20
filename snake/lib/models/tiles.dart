@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+//We create a tile enum to simplify the tile classification
 enum Tile {
   Empty,
   Apple,
@@ -12,8 +13,10 @@ enum Tile {
   Tail
 }
 
+//This class returns gradients depending on the current unlockable
 class SnakeStyle {
 
+  //This method returns a gradient for the head
   static LinearGradient getHeadGradient(String unlockable) {
     List<Color> colors = [];
 
@@ -34,6 +37,7 @@ class SnakeStyle {
     );
   }
 
+  //This method returns a gradient for the body
   static LinearGradient getBodyGradient(String unlockable) {
     List<Color> colors = [];
     
@@ -54,6 +58,7 @@ class SnakeStyle {
     );
   }
 
+  //This method returns a gradient for the tail
   static LinearGradient getTailGradient(String unlockable) {
     List<Color> colors = [];
     
@@ -75,6 +80,7 @@ class SnakeStyle {
   }
 }
 
+//Here are the widgets returned to the snake page grid
 class EmptyTile extends StatelessWidget {
   EmptyTile({Color borderColor})
   : color = borderColor;
@@ -138,6 +144,7 @@ class RainbowAppleTile extends StatelessWidget {
   }
 }
 
+//This is an image of an apple that changes its color with a rainbow effect
 class RainbowApple extends StatefulWidget {
   RainbowApple([double scale]) {
     this.scale = scale == null ? 7.5 : scale;

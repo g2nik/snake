@@ -50,7 +50,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Yellow",
                   unlockable: "yellow",
-                  unlockingScore: 0,
+                  unlockingScore: 10,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.yellowAccent, size: 100),
                   onPressed: reload
@@ -62,7 +62,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Teal",
                   unlockable: "teal",
-                  unlockingScore: 5,
+                  unlockingScore: 25,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.tealAccent, size: 100),
                   onPressed: reload
@@ -71,7 +71,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "White",
                   unlockable: "white",
-                  unlockingScore: 10,
+                  unlockingScore: 40,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.white, size: 100),
                   onPressed: reload
@@ -80,7 +80,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Black",
                   unlockable: "black",
-                  unlockingScore: 15,
+                  unlockingScore: 60,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.black, size: 100),
                   onPressed: reload
@@ -89,7 +89,7 @@ class _UnlockableBodiesState extends State<UnlockableBodies> {
                 UnlockableButton(
                   title: "Ghost",
                   unlockable: "ghost",
-                  unlockingScore: 20,
+                  unlockingScore: 100,
                   head: false,
                   child: Icon(Icons.brightness_high, color: Colors.cyan[200], size: 100),
                   onPressed: reload
