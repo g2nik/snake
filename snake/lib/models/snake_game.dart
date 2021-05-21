@@ -30,7 +30,7 @@ class SnakeGame {
 
   double opacity = 0;
   bool alternateColor = true;
-  int goldenAppleProbability = 10;
+  int goldenAppleProbability = 5;
   int rainbowAppleProbability = 1;
   int rainbowAppleCooldown = 0;
 
@@ -98,8 +98,6 @@ class SnakeGame {
     tiles[initialRow + 2][initialColumn] = Tile.Body;
     tiles[initialRow + 3][initialColumn] = Tile.Tail;
     tiles[(initialRow / 2).round()][initialColumn] = Tile.Apple;
-
-    tiles[1][1] = Tile.RainbowApple;
   }
 
 
@@ -150,7 +148,7 @@ class SnakeGame {
     //Third stage
     else if (score >= secondStageMax && score < thirdStageMax) {
       if (thirdStageIncrement) {
-        goldenAppleProbability += 10;
+        goldenAppleProbability += 5;
         rainbowAppleProbability++;
         thirdStageIncrement = false;
       }
@@ -161,7 +159,7 @@ class SnakeGame {
     //Fourth stage
     else if (score >= thirdStageMax) {
       if (fourthStageIncrement) {
-        goldenAppleProbability += 15;
+        goldenAppleProbability += 10;
         rainbowAppleProbability++;
         fourthStageIncrement = false;
       }
